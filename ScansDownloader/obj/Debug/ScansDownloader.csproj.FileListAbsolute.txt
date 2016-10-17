@@ -1,0 +1,16 @@
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\bin\Debug\ScansDownloader.exe.config
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\bin\Debug\ScansDownloader.exe
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\bin\Debug\ScansDownloader.pdb
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.csprojResolveAssemblyReference.cache
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\MainWindow.g.cs
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\App.g.cs
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader_MarkupCompile.cache
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader_MarkupCompile.lref
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\MainWindow.baml
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.g.resources
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.Properties.Resources.resources
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.csproj.GenerateResource.Cache
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.exe
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.pdb
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\SiteElem.g.cs
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\SiteElem.baml
