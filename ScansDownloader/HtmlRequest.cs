@@ -55,11 +55,10 @@ namespace ScansDownloader
             int pos1;
             int pos2;
             pos1 = str.IndexOf(start_part);
-            pos2 = str.IndexOf(end_part);
+            pos2 = str.Substring(pos1).IndexOf(end_part) + pos1;
 
             if (pos1 == -1 || pos2 == -1 || pos1 > pos2)
             {
-                Console.WriteLine("==> " + str);
                 return ("NOT FOUND");
             }
             return (str.Substring(pos1 + start_part.Length, pos2 - pos1 - start_part.Length));

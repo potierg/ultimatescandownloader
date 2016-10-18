@@ -46,8 +46,6 @@ namespace ScansDownloader
             return list_chapter;
         }
 
-        virtual public void set_delimeter(int start, int end) { }
-
         public String get_description(int val)
         {
             switch (val)
@@ -61,18 +59,6 @@ namespace ScansDownloader
 
             }
             return "";
-        }
-
-        virtual public void download_one_scan(String link, String nb_page, int chapter, String path) { }
-
-        virtual public List<String[]> get_pages_details(String link, String path, int chap)
-        {
-            return new List<string[]>();
-        }
-
-        virtual public List<String[]> get_chapters_details()
-        {
-            return new List<String[]>();
         }
 
         public void delete() {

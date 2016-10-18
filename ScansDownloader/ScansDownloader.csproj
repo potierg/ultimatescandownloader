@@ -57,7 +57,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ChapJapscan.cs" />
+    <Compile Include="ChapMangaHere.cs" />
     <Compile Include="ChapMangaReader.cs" />
+    <Compile Include="ChapReadManga.cs" />
     <Compile Include="IChapter.cs" />
     <Compile Include="HtmlRequest.cs" />
     <Compile Include="IManga.cs" />

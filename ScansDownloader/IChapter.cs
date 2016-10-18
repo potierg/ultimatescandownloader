@@ -17,7 +17,7 @@ namespace ScansDownloader
         protected virtual String link { get; set; } = "";
         public IChapter(IManga manga, String selected)
         {
-            manga_name = manga.getName();
+            manga_name = manga.getName().Trim();
             foreach (string[] i in manga.get_chapters())
             {
                 if (i[0] == "2")

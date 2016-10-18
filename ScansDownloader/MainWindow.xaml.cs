@@ -117,10 +117,13 @@ namespace ScansDownloader
 
         private void RefreshWaitList()
         {
+            if (list_mangas == null)
+                return;
             WaitList.Items.Clear();
             foreach (IChapter i in list_mangas)
             {
-                WaitList.Items.Add(i.getDescription());
+                if (i != null)
+                    WaitList.Items.Add(i.getDescription());
             }
             GridWaitList.Visibility = Visibility.Visible;
         }
@@ -163,12 +166,12 @@ namespace ScansDownloader
                     case 1:
                         chap = new ChapMangaReader(all_mangas, item);
                         break;
-                    /*case 2:
+                    case 2:
                         chap = new ChapMangaHere(all_mangas, item);
                         break;
                     case 3:
                         chap = new ChapReadManga(all_mangas, item);
-                        break;*/
+                        break;
                 }
                 list_mangas.Add(chap);
             }

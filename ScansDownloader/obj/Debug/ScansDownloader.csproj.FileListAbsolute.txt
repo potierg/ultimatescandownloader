@@ -14,3 +14,19 @@ c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\Sc
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\ScansDownloader.pdb
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\SiteElem.g.cs
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScansDownloader\ScansDownloader\obj\Debug\SiteElem.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\bin\Debug\ScansDownloader.exe.config
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.exe
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.pdb
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\bin\Debug\ScansDownloader.exe
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\bin\Debug\ScansDownloader.pdb
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.csprojResolveAssemblyReference.cache
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\MainWindow.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\SiteElem.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\App.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader_MarkupCompile.cache
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader_MarkupCompile.lref
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\MainWindow.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\SiteElem.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.g.resources
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.Properties.Resources.resources
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\ScansDownloader\obj\Debug\ScansDownloader.csproj.GenerateResource.Cache
