@@ -21,10 +21,12 @@ namespace ScansDownloader
 
             foreach (String i in content)
             {
-                if (i.IndexOf("class=\"next_page\"") != -1)
+                if (i.IndexOf("onerror=\"javascript:rerender(this);\"") != -1)
                 {
-                    String link_img = HtmlRequest.cut_str(i, "<a href=\"", "\" class=\"next_page\"");
-                    String ext = ".jpg";
+                    String link_img = HtmlRequest.cut_str(i, "<img src=\"", "\" onerror");
+                    int pos = link_img.LastIndexOf(".");
+                    int pos2 = link_img.LastIndexOf("?");
+                    String ext = link_img.Substring(pos, pos2 - pos);
 
                     String nb_chapter = chapter.ToString();
                     if (float.Parse(chapter, CultureInfo.InvariantCulture.NumberFormat) < 10)
