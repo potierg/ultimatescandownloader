@@ -79,6 +79,12 @@ namespace ScansDownloader
             {
                 Match m = Regex.Match(description, @"[0-9]+\.[0-9]+");
                 chap = m.Value;
+
+                if (chap == "")
+                {
+                    m = Regex.Match(description, @"[0-9]+");
+                    chap = m.Value;
+                }
             } else
                 chap = "";
 

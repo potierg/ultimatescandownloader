@@ -83,6 +83,11 @@ namespace ScansDownloader
             Match m = Regex.Match(description, @"[0-9]+\.[0-9]+");
             chap = m.Value;
 
+            if (chap == "")
+            {
+                m = Regex.Match(description, @"[0-9]+");
+                chap = m.Value;
+            }
             return (new String[5] { "Chapter " + chap, path_img, link, description, chap.ToString() });
         }
     }
