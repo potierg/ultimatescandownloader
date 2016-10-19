@@ -87,8 +87,6 @@ namespace ScansDownloader
             {
                 String str = i.Trim();
 
-                Debug.WriteLine(i);
-
                 if (str.IndexOf("<ul class=\"chp_lst\">") != -1)
                     is_start = 1;
 

@@ -232,7 +232,7 @@ namespace ScansDownloader
 
                 System.IO.Directory.CreateDirectory(path + chapters[1]);
                 CurrentElem.Content = chapters[0];
-                List<String[]> pages = i.get_pages_details(chapters[2], path + chapters[1], Int32.Parse(chapters[4]));
+                List<String[]> pages = i.get_pages_details(chapters[2], path + chapters[1], chapters[4]);
 
                 foreach (String[] details_page in pages)
                 {
@@ -243,7 +243,7 @@ namespace ScansDownloader
                     }
                     ProgressPage.Value = Int32.Parse(details_page[0]);
                     CurrentPage.Content = "Page " + details_page[2];
-                    i.download_one_scan(details_page[1], details_page[2], Int32.Parse(details_page[3]), path + chapters[1]);
+                    i.download_one_scan(details_page[1], details_page[2], details_page[3], path + chapters[1]);
                     await Task.Delay(10);
                 }
 
@@ -251,14 +251,25 @@ namespace ScansDownloader
                     list_mangas.RemoveAt(0);
                 RefreshWaitList();
             }
+            stop_action();
         }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e)
+        private void stop_action()
         {
             BackButton.IsEnabled = true;
             StopButton.Visibility = Visibility.Hidden;
             StartButton.Visibility = Visibility.Visible;
+
+            CurrentElem.Content = "";
+            CurrentPage.Content = "";
+            ProgressPage.Value = 0;
+
             cancel = true;
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            stop_action();
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,7 +15,7 @@ namespace ScansDownloader
         {
         }
 
-        public override void download_one_scan(String link, String nb_page, int chapter, String path)
+        public override void download_one_scan(String link, String nb_page, String chapter, String path)
         {
             String[] content = HtmlRequest.get_html(link);
 
@@ -27,7 +28,7 @@ namespace ScansDownloader
                     String ext = link_img.Substring(pos_point);
 
                     String nb_chapter = chapter.ToString();
-                    if (chapter < 10)
+                    if (float.Parse(chapter, CultureInfo.InvariantCulture.NumberFormat) < 10)
                         nb_chapter = "0" + nb_chapter;
 
                     if (Int32.Parse(nb_page) < 10)
@@ -38,7 +39,7 @@ namespace ScansDownloader
             }
         }
 
-        public override List<String[]> get_pages_details(String link, String path, int chap)
+        public override List<String[]> get_pages_details(String link, String path, String chap)
         {
             String[] content = HtmlRequest.get_html("http://www.mangareader.net" + link);
 
@@ -62,7 +63,7 @@ namespace ScansDownloader
                     page = "0" + cpt_page.ToString();
 
 
-                ret_pages.Add(new String[4] { ((int)((cpt_page / nb_pages) * 100.0)).ToString(), "http://www.mangareader.net" + link + "/" + cpt_page.ToString(), cpt_page.ToString(), chap.ToString() });
+                ret_pages.Add(new String[4] { ((int)((cpt_page / nb_pages) * 100.0)).ToString(), "http://www.mangareader.net" + link + "/" + cpt_page.ToString(), cpt_page.ToString(), chap });
                 cpt_page += 1;
             }
 
@@ -77,7 +78,11 @@ namespace ScansDownloader
 
             String path_img = "./" + manga_name + "/";
 
-            int chap = Int32.Parse(Regex.Match(description, @"\d+").Value);
+            String chap = "";
+
+            Match m = Regex.Match(description, @"[0-9]+\.[0-9]+");
+            chap = m.Value;
+
             return (new String[5] { "Chapter " + chap, path_img, link, description, chap.ToString() });
         }
     }

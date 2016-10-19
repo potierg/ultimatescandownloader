@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace ScansDownloader
         public ChapJapscan(IManga manga, String selected) : base(manga, selected)
         {
         }
-        public override void download_one_scan(String link, String nb_page, int chapter, String path)
+        public override void download_one_scan(String link, String nb_page, String chapter, String path)
         {
             String[] content = HtmlRequest.get_html(link);
 
@@ -25,13 +26,13 @@ namespace ScansDownloader
                     String ext = link_img.Substring(pos_point);
 
                     String nb_chapter = "";
-                    if (chapter < 10)
+                    if (float.Parse(chapter, CultureInfo.InvariantCulture.NumberFormat) < 10)
                         nb_chapter = "0" + chapter.ToString();
 
                     if (Int32.Parse(nb_page) < 10)
                         nb_page = "0" + nb_page;
 
-                    if (chapter != -1)
+                    if (chapter != "")
                         HtmlRequest.save_image(link_img, path + "chap" + nb_chapter + "page" + nb_page + ext);
                     else
                         HtmlRequest.save_image(link_img, path + "page " + nb_page + ext);
@@ -39,7 +40,7 @@ namespace ScansDownloader
             }
         }
 
-        public override List<String[]> get_pages_details(String link, String path, int chap)
+        public override List<String[]> get_pages_details(String link, String path, String chap)
         {
             String[] content = HtmlRequest.get_html(link);
 
@@ -60,7 +61,7 @@ namespace ScansDownloader
                     page = "0" + cpt_page.ToString();
 
 
-                ret_pages.Add(new String[4] { ((int)((cpt_page / nb_pages) * 100.0)).ToString(), link + cpt_page.ToString() + ".html", cpt_page.ToString(), chap.ToString() });
+                ret_pages.Add(new String[4] { ((int)((cpt_page / nb_pages) * 100.0)).ToString(), link + cpt_page.ToString() + ".html", cpt_page.ToString(), chap });
                 cpt_page += 1;
             }
 
@@ -73,11 +74,13 @@ namespace ScansDownloader
 
             String path_img = manga_name + "/" + path + "/";
 
-            int chap;
-            if (description.IndexOf("Tome") == -1)
-                chap = Int32.Parse(Regex.Match(description, @"\d+").Value);
-            else
-                chap = -1;
+            String chap;
+            if (description.IndexOf("Tome") == -1)                
+            {
+                Match m = Regex.Match(description, @"[0-9]+\.[0-9]+");
+                chap = m.Value;
+            } else
+                chap = "";
 
             return (new String[5] { path, path_img, link, description, chap.ToString() });
 

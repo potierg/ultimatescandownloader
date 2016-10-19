@@ -56,11 +56,11 @@ namespace ScansDownloader
             return null;
         }
 
-        virtual public List<String[]> get_pages_details(String link, String path, int chap)
+        virtual public List<String[]> get_pages_details(String link, String path, String chap)
         {
             return null;
         }
 
-        virtual public void download_one_scan(String link, String nb_page, int chapter, String path) { }
+        virtual public void download_one_scan(String link, String nb_page, String chapter, String path) { }
     }
 }
