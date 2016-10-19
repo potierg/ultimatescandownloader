@@ -33,7 +33,7 @@ namespace ScansDownloader
                         nb_page = "0" + nb_page;
 
                     if (chapter != "")
-                        HtmlRequest.save_image(link_img, path + "chap" + nb_chapter + "page" + nb_page + ext);
+                        HtmlRequest.save_image(link_img, path + "chap" + nb_chapter.Replace('.', ' ') + " page" + nb_page + ext);
                     else
                         HtmlRequest.save_image(link_img, path + "page " + nb_page + ext);
                 }

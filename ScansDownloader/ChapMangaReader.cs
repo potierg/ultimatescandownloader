@@ -34,7 +34,7 @@ namespace ScansDownloader
                     if (Int32.Parse(nb_page) < 10)
                         nb_page = "0" + nb_page;
 
-                    HtmlRequest.save_image(link_img, path + "chap" + nb_chapter + "page" + nb_page + ext);
+                    HtmlRequest.save_image(link_img, path + "chap" + nb_chapter.Replace('.', ' ') + " page" + nb_page + ext);
                 }
             }
         }
