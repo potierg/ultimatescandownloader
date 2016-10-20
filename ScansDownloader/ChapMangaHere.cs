@@ -36,7 +36,7 @@ namespace ScansDownloader
                         nb_page = "0" + nb_page;
 
                     if (link.IndexOf("javascript") == -1)
-                        HtmlRequest.save_image(link_img, path + "chap" + nb_chapter + " page" + nb_page + ext);
+                        HtmlRequest.save_image(link_img, path + "chap " + nb_chapter + " page " + nb_page + ext);
 
                     return;
                 }
