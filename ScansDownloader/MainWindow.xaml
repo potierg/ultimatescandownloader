@@ -9,7 +9,7 @@
     <Grid>
         <Grid x:Name="GridSites" Margin="0,0,0.4,-0.2" Visibility="Visible">
 
-            <Button x:Name="showWaitList" Content="Show WaitList" Margin="0,10,10,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Right" Width="89" Click="showWaitList_Click"/>
+            <Button x:Name="showWaitList" Content="Show WaitList" Margin="0,10,9.6,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Right" Width="89" Click="showWaitList_Click"/>
             <ListBox x:Name="listSites" Margin="0,47,0,0" SelectionChanged="listSites_SelectionChanged">
                 <DockPanel Height="51" LastChildFill="False" Width="508">
                     <Image Height="51" VerticalAlignment="Top" Width="124"/>

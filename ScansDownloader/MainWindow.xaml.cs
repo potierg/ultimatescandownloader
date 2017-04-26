@@ -214,7 +214,10 @@ namespace ScansDownloader
 
         private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            Int16 timeout;
+            Boolean hasBeenDownloaded;
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
             System.Windows.Forms.DialogResult result = dialog.ShowDialog();
             BackButton.IsEnabled = false;
 
@@ -227,25 +230,46 @@ namespace ScansDownloader
             while (list_mangas.Count > 0)
             {
                 IChapter i = list_mangas.First();
-                System.IO.Directory.CreateDirectory(path + i.getMangaName());
-                String[] chapters = i.get_chapters_details();
-
-                System.IO.Directory.CreateDirectory(path + chapters[1]);
-                CurrentElem.Content = chapters[0];
-                List<String[]> pages = i.get_pages_details(chapters[2], path + chapters[1], chapters[4]);
-
-                foreach (String[] details_page in pages)
+                timeout = 0;
+                hasBeenDownloaded = false;
+                while (!hasBeenDownloaded)
                 {
-                    if (cancel == true)
+                    try
                     {
-                        cancel = false;
+                        System.IO.Directory.CreateDirectory(path + i.getMangaName());
+                        String[] chapters = i.get_chapters_details();
+
+                        System.IO.Directory.CreateDirectory(path + chapters[1]);
+                        CurrentElem.Content = chapters[0];
+                        List<String[]> pages = i.get_pages_details(chapters[2], path + chapters[1], chapters[4]);
+
+                        foreach (String[] details_page in pages)
+                        {
+                            if (cancel == true)
+                            {
+                                cancel = false;
+                                return;
+                            }
+                            ProgressPage.Value = Int32.Parse(details_page[0]);
+                            CurrentPage.Content = "Page " + details_page[2];
+                            i.download_one_scan(details_page[1], details_page[2], details_page[3], path + chapters[1]);
+                            await Task.Delay(10);
+                        }
+                        hasBeenDownloaded = true;
+                    }
+                    catch (System.Net.WebException)
+                    {
+                        System.Threading.Thread.Sleep(30000);
+                        ++timeout;
+                    }
+                    if (timeout == 5)
+                    {
+                        stop_action();
                         return;
                     }
-                    ProgressPage.Value = Int32.Parse(details_page[0]);
-                    CurrentPage.Content = "Page " + details_page[2];
-                    i.download_one_scan(details_page[1], details_page[2], details_page[3], path + chapters[1]);
-                    await Task.Delay(10);
+
                 }
+
 
                 if (list_mangas.Count > 0)
                     list_mangas.RemoveAt(0);
