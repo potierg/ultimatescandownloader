@@ -118,7 +118,7 @@ namespace ScanDownloaderV2
                 ListSite.SelectedIndex = this.selectedSite;
         }
 
-        private void reloadSite(bool is_reload, String search)
+        private async void reloadSite(bool is_reload, String search)
         {
             try
             {
@@ -144,6 +144,7 @@ namespace ScanDownloaderV2
 
                         listSagas.Items.Add(itm);
                     }
+                    await Task.Delay(10);
                 }
             } catch (Exception e)
             {
@@ -153,7 +154,7 @@ namespace ScanDownloaderV2
             }
         }
 
-        private void loadChapter()
+        private async void loadChapter()
         {
             if (listSagas.SelectedIndex < 0)
                 return;
@@ -229,6 +230,7 @@ namespace ScanDownloaderV2
                                 listBook.Items.Add("Tome " + c.getNumber() + " ");
                         }
                     }
+                    await Task.Delay(10);
                 }
             }
             catch (Exception f)

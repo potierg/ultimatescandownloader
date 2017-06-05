@@ -1,0 +1,13 @@
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.exe.config
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.exe
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.pdb
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\MainWindow.g.cs
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\App.g.cs
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2_MarkupCompile.cache
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2_MarkupCompile.lref
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\MainWindow.baml
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.g.resources
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.Properties.Resources.resources
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csproj.GenerateResource.Cache
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.exe
+c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.pdb
