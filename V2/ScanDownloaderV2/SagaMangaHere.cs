@@ -76,7 +76,7 @@ namespace ScansDownloaderV2
                 {
                     desc = i.Substring(0, i.IndexOf("</a>"));
 
-                    current_chapter.setNumber(TryParseDouble(desc.Substring(name.Length)));
+                    current_chapter.setNumber(TryParseDouble(desc.Replace(name, "")));
 
                 }
 

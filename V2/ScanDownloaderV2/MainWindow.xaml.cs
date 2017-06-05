@@ -94,7 +94,8 @@ namespace ScanDownloaderV2
                         pos = i;
                         if (i + 15 < allMangas.Count)
                             pos = i + 10;
-                        listSagas.ScrollIntoView(listSagas.Items.GetItemAt(pos));
+                        if (pos < listSagas.Items.Count)
+                            listSagas.ScrollIntoView(listSagas.Items.GetItemAt(pos));
                         break;
                     }
                 }
@@ -118,7 +119,7 @@ namespace ScanDownloaderV2
                 ListSite.SelectedIndex = this.selectedSite;
         }
 
-        private async void reloadSite(bool is_reload, String search)
+        private void reloadSite(bool is_reload, String search)
         {
             try
             {
@@ -144,7 +145,6 @@ namespace ScanDownloaderV2
 
                         listSagas.Items.Add(itm);
                     }
-                    await Task.Delay(10);
                 }
             } catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace ScanDownloaderV2
             }
         }
 
-        private async void loadChapter()
+        private void loadChapter()
         {
             if (listSagas.SelectedIndex < 0)
                 return;
@@ -177,10 +177,24 @@ namespace ScanDownloaderV2
                     break;
             }
 
-            try
-            {
+                int index_saga = listSagas.SelectedIndex;
+                String value_saga = ((ListBoxItem)listSagas.SelectedItem).Content.ToString();
 
-                currentSaga.load_chapters(allMangas[listSagas.SelectedIndex]);
+                Debug.WriteLine(value_saga);
+
+                int index_select = -1;
+                int i = 0;
+                foreach (KeyValuePair<String, String> m in allMangas)
+                {
+                    if (m.Key == value_saga)
+                        index_select = i;
+                    ++i;
+                }
+
+                if (index_select < 0)
+                    return;
+
+                currentSaga.load_chapters(allMangas[index_select]);
                 List<Chapters> allBooks = currentSaga.get_chapters();
 
                 if (allBooks[0].getIndex() == -1)
@@ -230,20 +244,8 @@ namespace ScanDownloaderV2
                                 listBook.Items.Add("Tome " + c.getNumber() + " ");
                         }
                     }
-                    await Task.Delay(10);
                 }
-            }
-            catch (Exception f)
-            {
-                MessageBoxResult result = MessageBox.Show("Erreur : " + f.Message + " Veut tu réeasayer", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                if (result == MessageBoxResult.Yes)
-                    loadChapter();
-                else
-                {
-                    gridOneSaga.Visibility = Visibility.Hidden;
-                    gridSagas.Visibility = Visibility.Visible;
-                }
-            }
+
         }
 
         private void ListSaga_SelectionChanged(object sender, RoutedEventArgs e)
