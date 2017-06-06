@@ -459,11 +459,11 @@ namespace ScanDownloaderV2
                         System.IO.Directory.CreateDirectory(path2);
                     }
 
-                    List<MyPage> pages = null;
+                    List<String> pages_link = null;
                     int error = 0;
 
-                    try { 
-                       pages = allSites[d.site - 1].prepareDownload(c);
+                    try {
+                        pages_link = allSites[d.site - 1].prepareDownload(c);
                     }
                     catch (Exception g)
                     {
@@ -474,20 +474,20 @@ namespace ScanDownloaderV2
                     if (error == 0)
                     {
                         int nb_page_real = 0;
-                        int nb_page_max = pages.Count;
+                        int nb_page_max = c.getMax();
 
-                        foreach (MyPage p in pages)
+                        foreach (String l in pages_link)
                         {
                             try
                             {
-                                p.download(path2);
                                 nb_page_real++;
+                                allSites[d.site - 1].downloadScan(l, nb_page_real - 1, c, path2);
                                 d.pb1.Value = (int)((double)((double)(nb_page_real) / (double)(nb_page_max)) * 100.0);
-                                await Task.Delay(10);
+                                await Task.Delay(100);
                             }
                             catch (Exception g)
                             {
-                                listBoxErrors.Items.Add("Error : " + d.name + " " + c.getNumber() + " page " + p.num_page);
+                                listBoxErrors.Items.Add("Error : " + d.name + " " + c.getNumber() + " page " + nb_page_real);
                             }
                         }
                         nb_chap_real++;

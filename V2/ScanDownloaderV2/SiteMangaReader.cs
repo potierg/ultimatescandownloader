@@ -51,16 +51,14 @@ namespace ScansDownloaderV2
             }
         }
 
-        public override List<MyPage> prepareDownload(Chapters chapitre)
+        public override List<String> prepareDownload(Chapters chapitre)
         {
             String link = chapitre.getLink();
 
             string[] content = HtmlRequest.get_html(link);
             int nb_page = 0;
-            String link_first_img = "";
 
             List<String> listlinkPage = new List<string>();
-            List<MyPage> listPages = new List<MyPage>();
 
             foreach (String i in content)
             {
@@ -68,31 +66,28 @@ namespace ScansDownloaderV2
                 {
                     if (nb_page > 0)
                         listlinkPage.Add("http://www.mangareader.net" + HtmlRequest.cut_str(i, "value=\"", "\">"));
+                    else
+                        listlinkPage.Add("http://www.mangareader.net" + HtmlRequest.cut_str(i, "value=\"", "\" selected"));
                     nb_page++;
                 }
-                if (i.IndexOf("<img") != -1)
-                    link_first_img = HtmlRequest.cut_str(i, "src=\"", "\" alt=");
             }
+            chapitre.setMax(nb_page);
+            return listlinkPage;
+        }
 
-            listPages.Add(new MyPage(0, nb_page, link_first_img, chapitre.getNumber(), chapitre.isChapter()));
-            int p = 1;
 
-            foreach (String l in listlinkPage)
+        public override void downloadScan(String link, int nb_page, Chapters chapitre, String path)
+        {
+            string[] content2 = HtmlRequest.get_html(link);
+            foreach (String j in content2)
             {
-                string[] content2 = HtmlRequest.get_html(l);
-                foreach (String j in content2)
+                if (j.IndexOf("<img") != -1)
                 {
-                    if (j.IndexOf("<img") != -1)
-                        listPages.Add(new MyPage(p, nb_page, HtmlRequest.cut_str(j, "src=\"", "\" alt="), chapitre.getNumber(), chapitre.isChapter()));
+                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\" alt="), chapitre.getNumber(), chapitre.isChapter());
+                    p.download(path);
+                    p = null;
                 }
-                content2 = null;
-                p++;
             }
-            content = null;
-            listlinkPage = null;
-
-
-            return listPages;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ScanDownloaderV2
         private String link;
         private Tome tome;
         private String title;
+        private int total_page;
 
         public Chapters()
         {
@@ -32,6 +33,7 @@ namespace ScanDownloaderV2
             else
                 this.tome = null;
             this.title = old.title;
+            this.total_page = old.total_page;
         }
 
         public Chapters(int id, bool is_chapter, double nb, String l, Tome t, String title)
@@ -42,6 +44,7 @@ namespace ScanDownloaderV2
             this.link = l;
             this.tome = t;
             this.title = title;
+            this.total_page = 0;
         }
 
         public void setIndex(int id)
@@ -74,6 +77,11 @@ namespace ScanDownloaderV2
             this.title = title;
         }
 
+        public void setMax(int max)
+        {
+            total_page = max;
+        }
+
         public int getIndex()
         {
             return index;
@@ -102,6 +110,11 @@ namespace ScanDownloaderV2
         public String getTitle()
         {
             return title;
+        }
+
+        public int getMax()
+        {
+            return total_page;
         }
     }
 }

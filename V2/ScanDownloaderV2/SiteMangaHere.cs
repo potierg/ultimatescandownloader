@@ -44,16 +44,14 @@ namespace ScansDownloaderV2
             }
         }
 
-        public override List<MyPage> prepareDownload(Chapters chapitre)
+        public override List<String> prepareDownload(Chapters chapitre)
         {
             String link = chapitre.getLink();
 
             string[] content = HtmlRequest.get_html(link);
             int nb_page = 0;
-            String link_first_img = "";
 
             List<String> listlinkPage = new List<string>();
-            List<MyPage> listPages = new List<MyPage>();
 
             int stop = 0;
 
@@ -65,30 +63,35 @@ namespace ScansDownloaderV2
                 {
                     if (nb_page > 0)
                         listlinkPage.Add(HtmlRequest.cut_str(i, "value=\"", "\" >"));
+                    else
+                        listlinkPage.Add(HtmlRequest.cut_str(i, "value=\"", "\" selected"));
                     nb_page++;
                 }
-                if (i.IndexOf("onload=\"loadImg(this)\"") != -1)
-                    link_first_img = HtmlRequest.cut_str(i, "src=\"", "\" onload=");
             }
-
-            listPages.Add(new MyPage(0, nb_page, link_first_img, chapitre.getNumber(), chapitre.isChapter()));
-            int p = 1;
-
-            foreach (String l in listlinkPage)
-            {
-                string[] content2 = HtmlRequest.get_html(l);
-                foreach (String j in content2)
-                {
-                    if (j.IndexOf("onload=\"loadImg(this)\"") != -1)
-                        listPages.Add(new MyPage(p, nb_page, HtmlRequest.cut_str(j, "src=\"", "\" onload="), chapitre.getNumber(), chapitre.isChapter()));
-                }
-                content2 = null;
-                p++;
-            }
-            content = null;
-            listlinkPage = null;
-
-            return listPages;
+            chapitre.setMax(nb_page);
+            return (listlinkPage);
         }
+
+        public override void downloadScan(String link, int nb_page, Chapters chapitre, String path)
+        {
+            string[] content2 = HtmlRequest.get_html(link);
+            int reset = 0;
+            while (content2.Length < 75 && reset < 5)
+            {
+                System.Threading.Thread.Sleep(1000);
+                content2 = null;
+                content2 = HtmlRequest.get_html(link);
+                reset++;
+            }
+            foreach (String j in content2)
+            {
+                if (j.IndexOf("id=\"image\"") != -1)
+                {
+                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\" onload="), chapitre.getNumber(), chapitre.isChapter());
+                    p.download(path);
+                    p = null;
+                }
+            }
+       }
     }
 }

@@ -38,49 +38,41 @@ namespace ScansDownloaderV2
                     allManga.Add(new KeyValuePair<String, String>(name, "http://www.japscan.com" + link + "/"));
                 }
             }
-        }        
+        }
 
-        public override List<MyPage> prepareDownload(Chapters chapitre)
+        public override List<String> prepareDownload(Chapters chapitre)
         {
             String link = chapitre.getLink();
 
             string[] content = HtmlRequest.get_html(link);
             int nb_page = 0;
-            String link_first_img = "";
 
             List<String> listlinkPage = new List<string>();
-            List<MyPage> listPages = new List<MyPage>();
 
             foreach (String i in content)
             {
                 if (i.IndexOf("data-img") != -1 && i.IndexOf("itemprop") == -1 && i.IndexOf("__Add__") == -1)
                 {
-                    if (nb_page > 0)
-                        listlinkPage.Add(HtmlRequest.cut_str(i, "value=\"", "\">"));
+                    listlinkPage.Add(HtmlRequest.cut_str(i, "value=\"", "\">"));
                     nb_page++;
                 }
-                if (i.IndexOf("itemprop=\"image\"") != -1)
-                    link_first_img = HtmlRequest.cut_str(i, "src=\"", "\"/>");
             }
+            chapitre.setMax(nb_page);
+            return listlinkPage;
+        }
 
-            listPages.Add(new MyPage(0, nb_page, link_first_img, chapitre.getNumber(), chapitre.isChapter()));
-            int p = 1;
-
-            foreach (String l in listlinkPage)
+        public override void downloadScan(String link, int nb_page, Chapters chapitre, String path)
+        {
+            string[] content = HtmlRequest.get_html("http://www.japscan.com" + link);
+            foreach (String j in content)
             {
-                string[] content2 = HtmlRequest.get_html("http://www.japscan.com" + l);
-                foreach (String j in content2)
+                if (j.IndexOf("itemprop=\"image\"") != -1)
                 {
-                    if (j.IndexOf("itemprop=\"image\"") != -1)
-                        listPages.Add(new MyPage(p, nb_page,  HtmlRequest.cut_str(j, "src=\"", "\"/>"), chapitre.getNumber(), chapitre.isChapter()));
+                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\"/>"), chapitre.getNumber(), chapitre.isChapter());
+                    p.download(path);
+                    p = null;
                 }
-                content2 = null;
-                p++;
             }
-            content = null;
-            listlinkPage = null;
-
-            return listPages;
         }
     }
 }

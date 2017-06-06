@@ -21,9 +21,14 @@ namespace ScansDownloaderV2
             return allManga;
         }
 
-        public virtual List<MyPage> prepareDownload(Chapters chapitre)
+        public virtual List<String> prepareDownload(Chapters chapitre)
         {
             return null;
+        }
+
+        public virtual void downloadScan(String link, int nb_page, Chapters chapitre, String path)
+        {
+
         }
 
         public void delete()
