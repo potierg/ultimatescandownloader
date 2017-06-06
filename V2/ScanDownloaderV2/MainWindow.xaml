@@ -16,6 +16,7 @@
                             <ComboBoxItem Content="Japscan" HorizontalAlignment="Left" Width="118"/>
                             <ComboBoxItem Content="MangaReader" HorizontalAlignment="Left" Width="118"/>
                             <ComboBoxItem Content="MangaHere" HorizontalAlignment="Left" Width="118"/>
+                            <ComboBoxItem Content="ReadManga" HorizontalAlignment="Left" Width="118"/>
                         </ComboBox>
                         <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="125,0,0,0" VerticalAlignment="Top" Width="80" Height="23" Click="RefreshButton_Click"/>
                         <TextBox x:Name="SearchBox" Height="23" Margin="212,0,42,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="SearchBox_TextChanged"/>

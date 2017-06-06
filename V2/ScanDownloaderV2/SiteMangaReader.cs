@@ -13,6 +13,7 @@ namespace ScansDownloaderV2
         public SiteMangaReader()
         {
             link_list_manga = "http://www.mangareader.net/alphabetical";
+            name_file = "MangaReader.json";
         }
 
         public override void load_all_mangas()
@@ -49,6 +50,7 @@ namespace ScansDownloaderV2
                     allManga.Add(new KeyValuePair<String, String>(name, "http://www.mangareader.net" + link));
                 }
             }
+            this.createFile();
         }
 
         public override List<String> prepareDownload(Chapters chapitre)

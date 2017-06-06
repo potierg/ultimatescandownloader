@@ -13,6 +13,7 @@ namespace ScansDownloaderV2
         public SiteMangaHere()
         {
             link_list_manga = "http://www.mangahere.co/mangalist/";
+            name_file = "MangaHere.json";
         }
 
         public override void load_all_mangas()
@@ -42,6 +43,7 @@ namespace ScansDownloaderV2
                     }
                 }
             }
+            this.createFile();
         }
 
         public override List<String> prepareDownload(Chapters chapitre)

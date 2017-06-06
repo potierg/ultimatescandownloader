@@ -37,188 +37,71 @@ namespace ScansDownloaderV2
             link = infos.Value;
 
             list_chapter.Clear();
-            int is_start = 0;
 
-            int cpt_desc = 0;
-            int cpt_auth = 0;
+            int synopsis = 0;
+            int author = 0;
+            int chapter = 0;
+            int picture = 0;
 
-            String[] tab;
+            String tmp_link = "";
+
+            int index = 0;
+
 
             foreach (String i in html)
             {
-                found = i.IndexOf("<a href=\"/");
 
-
-                if (i.IndexOf("<th class=\"leftgap\">Chapter Name</th>") != -1)
-                    is_start = 1;
-
-                if (found == 0 && is_start == 1)
+                if (synopsis == 1)
                 {
-                    int end_pos = i.IndexOf("/\">");
-
-                    String link = HtmlRequest.cut_str(i, "<a href=\"", "\">");
-                    String desc = HtmlRequest.cut_str(i, "\">", "</a>") + " : " + HtmlRequest.cut_str(i, "</a> : ", "</td>");
-
-                    tab = new String[3];
-
-                    tab[0] = "1";
-                    tab[1] = link;
-                    tab[2] = desc;
-
-                    //list_chapter.Add(tab);
-
-                }
-
-                if (cpt_desc == 1)
-                {
-                    Debug.WriteLine(i);
-                    resumé = HtmlRequest.cut_str(i, "<p>", "</p>");
-                    cpt_desc = 0;
-                }
-
-                if (i.IndexOf("<li><a href") != -1 && cpt_auth == 1)
-                {
-                    auteur = HtmlRequest.cut_str(i, "\">", "</a></li>");
-                    cpt_auth = 0;
+                    synopsis = 0;
+                    resumé = HtmlRequest.cut_str(i, "\">", "</span></p>");
+                    if (resumé == "NOT FOUND")
+                        resumé = HtmlRequest.cut_str(i, "<p>", "</p>");
+                    if (resumé == "NOT FOUND")
+                        resumé = "";
                 }
 
                 if (i.IndexOf("<li class=\"list-group-item movie-detail\">") != -1)
-                    cpt_desc = 1;
+                    synopsis = 1;
 
-                if (i.IndexOf("<li class=\"director\">") != -1)
-                    cpt_auth = 1;
+                if (author == 1 && i.IndexOf("<li><a href=\"") != -1)
+                {
+                    author = 0;
+                    auteur = HtmlRequest.cut_str(i, "\">", "</a></li>");
+                }
 
+                if (i.IndexOf("<ul class=\"cast-list clearfix\">") != -1)
+                    author = 1;
+
+                if (picture == 1 && i.IndexOf("<img src=\"") != -1)
+                {
+                    picture = 0;
+                    img_link = HtmlRequest.cut_str(i, "<img src=\"", "\" alt=\"");
+                }
+
+                if (i.IndexOf("<div class=\"col-md-3\">") != -1)
+                    picture = 1;
+
+                if (i.IndexOf("<ul class=\"chp_lst\">") != -1)
+                    chapter = 1;
+
+                if (i.IndexOf("<a href=\"") != -1 && chapter == 1)
+                    tmp_link = HtmlRequest.cut_str(i, "<a href=\"", "\">");
+
+                if (i.IndexOf("<span class=\"val\"><span class=\"icon-arrow-2\"></span>") != -1)
+                {
+                    String desc = HtmlRequest.cut_str(i, "\"></span>", " </span>");
+
+                    Double number = TryParseDouble(desc.Substring(name.Length + 3));
+
+                    if (number != -666)
+                    {
+                        list_chapter.Insert(0, new Chapters(index, true, number, tmp_link + "/", null, null));
+                        index++;
+                    }
+                }
             }
             nb_tomes = 0;
-        }
-
-        public override void set_delimeter(int pos_start, int pos_end)
-        {
-            int pos = -1;
-            int is_start = 0;
-            nb_chapter = 0;
-
-            /*foreach (String[] i in list_chapter)
-            {
-                if (i[0] == "1")
-                {
-                    pos += 1;
-                    if (pos == pos_start)
-                    {
-                        start = i[2];
-                        is_start = 1;
-                    }
-                    if (pos == pos_end)
-                    {
-                        end = i[2];
-                        is_start = 0;
-                    }
-                    if (is_start == 1)
-                        nb_chapter += 1;
-                }
-            }*/
-            return;
-        }
-
-        public override void download_one_scan(String link, String nb_page, int chapter, String path)
-        {
-            String[] content = HtmlRequest.get_html(link);
-
-            foreach (String i in content)
-            {
-                if (i.IndexOf("<img id=\"img\"") != -1)
-                {
-                    String link_img = HtmlRequest.cut_str(i, "src=\"", "\" alt");
-                    int pos_point = link_img.LastIndexOf('.');
-                    String ext = link_img.Substring(pos_point);
-
-                    String nb_chapter = "";
-                    if (chapter < 10)
-                        nb_chapter = "0" + chapter.ToString();
-
-                    if (Int32.Parse(nb_page) < 10)
-                        nb_page = "0" + nb_page;
-
-                    HtmlRequest.save_image(link_img, path_img + "chap " + nb_chapter + " page " + nb_page + ext);
-                }
-            }
-        }
-
-        public override List<Chapters> get_pages_details(String link, String path, int chap)
-        {
-            String[] content = HtmlRequest.get_html("http://www.mangareader.net" + link);
-
-            List<Chapters> ret_pages = new List<Chapters>();
-
-            double nb_pages = 0;
-            int is_start = 0;
-            foreach (String i in content)
-            {
-                if (i.IndexOf("<div id=\"selectpage\">") != -1)
-                    is_start = 1;
-                if (i.IndexOf("<option value=") != -1 && is_start == 1)
-                    nb_pages += 1;
-            }
-
-            int cpt_page = 1;
-            while (cpt_page <= nb_pages)
-            {
-                String page = cpt_page.ToString();
-                if (cpt_page < 10)
-                    page = "0" + cpt_page.ToString();
-
-
-                //ret_pages.Add(new String[4] { ((int)((cpt_page / nb_pages) * 100.0)).ToString(), "http://www.mangareader.net" + link + "/" + cpt_page.ToString(), cpt_page.ToString(), chap.ToString() });
-                cpt_page += 1;
-            }
-
-            return ret_pages;
-        }
-
-
-        public override List<Chapters> get_chapters_details()
-        {
-            int is_start = 0;
-            double cpt_chapter = 0;
-
-            String title = "";
-
-            List<Chapters> ret_chapters = new List<Chapters>();
-
-            title = name;
-
-            /*foreach (String[] i in list_chapter)
-            {
-                if (i[0] == "1")
-                {
-                    if (start == i[2])
-                        is_start = 1;
-
-                    if (is_start == 1)
-                    {
-                        int progressValue;
-
-                        if (cpt_chapter > 0)
-                            progressValue = (int)((cpt_chapter / nb_chapter) * 100.0);
-                        else
-                            progressValue = 0;
-
-                        path_img = "./" + name + "/";
-
-                        int chap = Int32.Parse(Regex.Match(i[2], @"\d+").Value);
-
-                        ret_chapters.Add(new String[6] { progressValue.ToString(), title, path_img, i[1], i[2], chap.ToString() });
-
-                        cpt_chapter++;
-                    }
-
-                    if (end == i[2])
-                        is_start = 0;
-
-                }
-            }*/
-
-            return (ret_chapters);
         }
     }
 }

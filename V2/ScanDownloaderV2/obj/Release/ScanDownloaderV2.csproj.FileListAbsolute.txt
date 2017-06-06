@@ -11,3 +11,6 @@ c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\S
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csproj.GenerateResource.Cache
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.exe
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.pdb
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csprojResolveAssemblyReference.cache
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.dll
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.xml

@@ -61,35 +61,6 @@ namespace ScanDownloaderV2
             return list_chapter;
         }
 
-        virtual public void set_delimeter(int start, int end) { }
-
-        public String get_description(int val)
-        {
-            switch (val)
-            {
-                case 0:
-                    return (name);
-                case 1:
-                    return (start);
-                case 2:
-                    return (end);
-
-            }
-            return "";
-        }
-
-        virtual public void download_one_scan(String link, String nb_page, int chapter, String path) { }
-
-        virtual public List<Chapters> get_pages_details(String link, String path, int chap)
-        {
-            return new List<Chapters>();
-        }
-
-        virtual public List<Chapters> get_chapters_details()
-        {
-            return new List<Chapters>();
-        }
-
         public void delete()
         {
             list_chapter = null;
@@ -106,8 +77,15 @@ namespace ScanDownloaderV2
             }
             String new_nb = numberBuilder.ToString();
             new_nb = new_nb.Replace(".", ",");
-            Double ret = Convert.ToDouble(new_nb);
-            return ret;
+            try
+            {
+                Double ret = Convert.ToDouble(new_nb);
+                return ret;
+            }
+            catch (Exception e)
+            {
+                return -666;
+            }
         }
 
     }

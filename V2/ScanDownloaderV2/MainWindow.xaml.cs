@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace ScanDownloaderV2
             allSites.Add(new SiteJapscan());
             allSites.Add(new SiteMangaReader());
             allSites.Add(new SiteMangaHere());
+            allSites.Add(new SiteReadManga());
         }
 
         private void initLetters()
@@ -110,25 +112,28 @@ namespace ScanDownloaderV2
                 this.selectedSite = ListSite.SelectedIndex;
                 gridOneSaga.Visibility = Visibility.Hidden;
                 if (allSites[selectedSite - 1].get_all_mangas() == null)
-                    reloadSite(true, null);
+                    reloadSite(1, null);
                 else
-                    reloadSite(false, null);
+                    reloadSite(0, null);
                 gridSagas.Visibility = Visibility.Visible;
             }
             else
                 ListSite.SelectedIndex = this.selectedSite;
         }
 
-        private void reloadSite(bool is_reload, String search)
+        private void reloadSite(int is_reload, String search) // is_reload 0 - no, 1 - once, 2 - button
         {
             try
             {
                 if (selectedSite <= 0)
                     return;
-                if (is_reload)
+                if (is_reload > 0)
                 {
                     allSites[selectedSite - 1].delete();
-                    allSites[selectedSite - 1].load_all_mangas();
+                    if (File.Exists(allSites[selectedSite - 1].getNameFile()) && is_reload != 2)
+                        allSites[selectedSite - 1].loadFile();
+                    else
+                        allSites[selectedSite - 1].load_all_mangas();
                 }
                 allMangas = allSites[selectedSite - 1].get_all_mangas();
 
@@ -150,7 +155,7 @@ namespace ScanDownloaderV2
             {
                 MessageBoxResult result = MessageBox.Show("Erreur : "+e.Message + " Veut tu réeasayer", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
                 if (result == MessageBoxResult.Yes)
-                    reloadSite(true, null);
+                    reloadSite(1, null);
             }
         }
 
@@ -175,9 +180,12 @@ namespace ScanDownloaderV2
                 case 3:
                     currentSaga = new SagaMangaHere();
                     break;
+                case 4:
+                    currentSaga = new SagaReadManga();
+                    break;
             }
 
-                int index_saga = listSagas.SelectedIndex;
+            int index_saga = listSagas.SelectedIndex;
                 String value_saga = ((ListBoxItem)listSagas.SelectedItem).Content.ToString();
 
                 Debug.WriteLine(value_saga);
@@ -261,7 +269,7 @@ namespace ScanDownloaderV2
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            reloadSite(true, null);
+            reloadSite(2, null);
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -269,7 +277,7 @@ namespace ScanDownloaderV2
             gridOneSaga.Visibility = Visibility.Hidden;
             gridSagas.Visibility = Visibility.Visible;
 
-            reloadSite(false, SearchBox.Text.ToString());
+            reloadSite(0, SearchBox.Text.ToString());
         }
 
         private void buttonDownloadSaga_Click(object sender, RoutedEventArgs e)

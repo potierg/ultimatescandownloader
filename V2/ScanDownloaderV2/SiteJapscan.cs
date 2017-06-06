@@ -15,6 +15,7 @@ namespace ScansDownloaderV2
         public SiteJapscan()
         {
             link_list_manga = "http://www.japscan.com/mangas/";
+            name_file = "Japscan.json";
         }
 
         public override void load_all_mangas()
@@ -38,6 +39,7 @@ namespace ScansDownloaderV2
                     allManga.Add(new KeyValuePair<String, String>(name, "http://www.japscan.com" + link + "/"));
                 }
             }
+            this.createFile();
         }
 
         public override List<String> prepareDownload(Chapters chapitre)
