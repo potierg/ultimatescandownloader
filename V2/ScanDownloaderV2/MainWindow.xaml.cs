@@ -205,16 +205,18 @@ namespace ScanDownloaderV2
                 currentSaga.load_chapters(allMangas[index_select]);
                 List<Chapters> allBooks = currentSaga.get_chapters();
 
-                if (allBooks[0].getIndex() == -1)
-                {
-                    TitleSaga.Text = currentSaga.getName() + " - Attention, la série est licensié !";
-                    buttonDownloadSaga.IsEnabled = false;
-                }
-                else
-                {
-                    buttonDownloadSaga.IsEnabled = true;
-                    TitleSaga.Text = currentSaga.getName();
-                }
+            if (allBooks.Count > 0 && allBooks[0].getIndex() == -1)
+            {
+                TitleSaga.Text = currentSaga.getName() + " - Attention, la série est licensié !";
+                buttonDownloadSaga.IsEnabled = false;
+            }
+            else if (allBooks.Count > 0)
+            {
+                buttonDownloadSaga.IsEnabled = true;
+                TitleSaga.Text = currentSaga.getName();
+            }
+
+
                 DetailsSaga.Text = currentSaga.getAuteur() + " - " + currentSaga.getAnnée();
                 ResumeSaga.Text = currentSaga.getResumé();
 

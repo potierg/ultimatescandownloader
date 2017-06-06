@@ -96,7 +96,7 @@ namespace ScansDownloaderV2
 
                     if (number != -666)
                     {
-                        list_chapter.Insert(0, new Chapters(index, true, number, tmp_link + "/", null, null));
+                        list_chapter.Add(new Chapters(index, true, number, tmp_link + "/", null, null));
                         index++;
                     }
                 }

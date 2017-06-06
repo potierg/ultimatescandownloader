@@ -55,7 +55,7 @@ namespace ScansDownloaderV2
             {
                 if (i.IndexOf("data-img") != -1 && i.IndexOf("itemprop") == -1 && i.IndexOf("__Add__") == -1)
                 {
-                    listlinkPage.Add(HtmlRequest.cut_str(i, "value=\"", "\">"));
+                    listlinkPage.Add("http://www.japscan.com" + HtmlRequest.cut_str(i, "value=\"", "\">"));
                     nb_page++;
                 }
             }
@@ -65,12 +65,18 @@ namespace ScansDownloaderV2
 
         public override void downloadScan(String link, int nb_page, Chapters chapitre, String path)
         {
-            string[] content = HtmlRequest.get_html("http://www.japscan.com" + link);
+            string[] content = HtmlRequest.get_html(link);
             foreach (String j in content)
             {
                 if (j.IndexOf("itemprop=\"image\"") != -1)
                 {
-                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\"/>"), chapitre.getNumber(), chapitre.isChapter());
+                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\" />"), chapitre.getNumber(), chapitre.isChapter());
+                    if (p.link == "NOT FOUND")
+                    {
+                        p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\"/>"), chapitre.getNumber(), chapitre.isChapter());
+                        if (p.link == "NOT FOUND")
+                            throw new Exception();
+                    }
                     p.download(path);
                     p = null;
                 }
