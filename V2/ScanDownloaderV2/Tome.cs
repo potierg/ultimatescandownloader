@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace ScanDownloaderV2
 {
+    [JsonObject(MemberSerialization.OptOut)]
     public class Tome
     {
-        private String title;
-        private int number;
+        public String title;
+        public int number;
+
+        public Tome()
+        {
+            title = "";
+            number = 0;
+        }
 
         public Tome(Tome t)
         {

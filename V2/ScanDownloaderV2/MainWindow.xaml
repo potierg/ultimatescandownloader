@@ -19,13 +19,19 @@
                             <ComboBoxItem Content="ReadManga" HorizontalAlignment="Left" Width="118"/>
                         </ComboBox>
                         <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="125,0,0,0" VerticalAlignment="Top" Width="80" Height="23" Click="RefreshButton_Click"/>
-                        <TextBox x:Name="SearchBox" Height="23" Margin="212,0,42,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="SearchBox_TextChanged"/>
-                        <Button x:Name="button" Content="Find" Margin="0,0,10,0" VerticalAlignment="Top" RenderTransformOrigin="0,-0.1" HorizontalAlignment="Right" Width="27" Height="23"/>
+                        <TextBox x:Name="SearchBox" Height="23" Margin="212,0,98,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="SearchBox_TextChanged"/>
+                        <Button x:Name="buttonDownloadSelect" Content="Download" Margin="0,0,10,4" VerticalAlignment="Bottom" RenderTransformOrigin="0,-0.1" HorizontalAlignment="Right" Width="83" Height="23" Click="buttonDownloadSelect_Click"/>
                     </Grid>
                     <Grid x:Name="GridLetter" Margin="0,32,10,0" Height="26" VerticalAlignment="Top">
                     </Grid>
                     <Grid x:Name="gridSagas" Margin="0,58,0,0">
-                        <ListBox x:Name="listSagas" SelectionChanged="ListSaga_SelectionChanged"/>
+                        <ListBox x:Name="listSagas" SelectionMode="Extended">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="ListSaga_MouseDown"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
                     </Grid>
                     <Grid x:Name="gridOneSaga" Margin="0,58,0,0" Visibility="Hidden">
                         <Grid Height="164" VerticalAlignment="Top">

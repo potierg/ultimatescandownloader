@@ -31,7 +31,6 @@ namespace ScansDownloaderV2
             String[] html = HtmlRequest.get_html(infos.Value);
 
             List<Chapters> array_positions = new List<Chapters>();
-            int found;
 
             name = infos.Key;
             link = infos.Value;

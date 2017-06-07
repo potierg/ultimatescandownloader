@@ -17,8 +17,10 @@ namespace ScansDownloaderV2
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link);
                 response = (HttpWebResponse)request.GetResponse();
+                if (response == null)
+                    throw new Exception("Load " + link);
             }
-            catch (WebException ex)
+            catch (System.Exception ex)
             {
                 throw new Exception("Load " + link);
             }

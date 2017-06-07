@@ -1,10 +1,12 @@
-﻿using ScansDownloaderV2;
+﻿using Newtonsoft.Json;
+using ScansDownloaderV2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,7 +31,11 @@ namespace ScanDownloaderV2
         private ISaga currentSaga;
 
         private List<KeyValuePair<String, String>> allMangas;
-        private List<Download> listDownload;
+        private List<KeyValuePair<String, String>> printMangas;
+        public List<Download> listDownload;
+
+        private ProgressBar pg1;
+        private ProgressBar pg2;
 
         public MainWindow()
         {
@@ -38,11 +44,15 @@ namespace ScanDownloaderV2
 
             listDownload = new List<Download>();
 
+            printMangas = new List<KeyValuePair<String, String>>();
+
             allSites = new List<ISite>();
             allSites.Add(new SiteJapscan());
             allSites.Add(new SiteMangaReader());
             allSites.Add(new SiteMangaHere());
             allSites.Add(new SiteReadManga());
+
+            loadDownload();
         }
 
         private void initLetters()
@@ -140,11 +150,14 @@ namespace ScanDownloaderV2
                 listSagas.Items.Clear();
 
                 Debug.WriteLine(is_reload + " - " + search);
+                printMangas.Clear();
 
                 foreach (KeyValuePair<String, String> pair in allMangas)
                 {
                     if (search == null || pair.Key.ToLower().IndexOf(search.ToLower()) != -1)
                     {
+                        printMangas.Add(pair);
+
                         ListBoxItem itm = new ListBoxItem();
                         itm.Content = pair.Key;
 
@@ -159,16 +172,9 @@ namespace ScanDownloaderV2
             }
         }
 
-        private void loadChapter()
+        private ISaga getCurrentSaga()
         {
-            if (listSagas.SelectedIndex < 0)
-                return;
-
-            gridSagas.Visibility = Visibility.Hidden;
-            gridOneSaga.Visibility = Visibility.Visible;
-
             currentSaga = null;
-
             switch (selectedSite)
             {
                 case 1:
@@ -184,81 +190,81 @@ namespace ScanDownloaderV2
                     currentSaga = new SagaReadManga();
                     break;
             }
+            return currentSaga;
+        }
+
+        private void loadChapter()
+        {
+            if (listSagas.SelectedIndex < 0)
+                return;
+
+            gridSagas.Visibility = Visibility.Hidden;
+            gridOneSaga.Visibility = Visibility.Visible;
+
+            currentSaga = getCurrentSaga();
 
             int index_saga = listSagas.SelectedIndex;
-                String value_saga = ((ListBoxItem)listSagas.SelectedItem).Content.ToString();
+            String value_saga = ((ListBoxItem)listSagas.SelectedItem).Content.ToString();
 
-                Debug.WriteLine(value_saga);
+            Debug.WriteLine(value_saga);
 
-                int index_select = -1;
-                int i = 0;
-                foreach (KeyValuePair<String, String> m in allMangas)
-                {
-                    if (m.Key == value_saga)
-                        index_select = i;
-                    ++i;
-                }
-
-                if (index_select < 0)
-                    return;
-
-                currentSaga.load_chapters(allMangas[index_select]);
-                List<Chapters> allBooks = currentSaga.get_chapters();
+            currentSaga.load_chapters(printMangas[listSagas.SelectedIndex]);
+            List<Chapters> allBooks = currentSaga.get_chapters();
 
             if (allBooks.Count > 0 && allBooks[0].getIndex() == -1)
             {
                 TitleSaga.Text = currentSaga.getName() + " - Attention, la série est licensié !";
                 buttonDownloadSaga.IsEnabled = false;
             }
-            else if (allBooks.Count > 0)
+            else
             {
                 buttonDownloadSaga.IsEnabled = true;
                 TitleSaga.Text = currentSaga.getName();
             }
 
 
-                DetailsSaga.Text = currentSaga.getAuteur() + " - " + currentSaga.getAnnée();
-                ResumeSaga.Text = currentSaga.getResumé();
+            DetailsSaga.Text = currentSaga.getAuteur() + " - " + currentSaga.getAnnée();
+            ResumeSaga.Text = currentSaga.getResumé();
 
-                if (currentSaga.getImgLink() != null)
+            if (currentSaga.getImgLink() != null)
+            {
+                BitmapImage bi3 = new BitmapImage();
+                bi3.BeginInit();
+                bi3.UriSource = new Uri(currentSaga.getImgLink(), UriKind.RelativeOrAbsolute);
+                bi3.CacheOption = BitmapCacheOption.OnLoad;
+                bi3.EndInit();
+
+                CoverSaga.Source = bi3;
+            }
+            else
+                CoverSaga.Source = null;
+
+            listBook.Items.Clear();
+
+            foreach (Chapters c in allBooks)
+            {
+                if (c.getIndex() != -1)
                 {
-                    BitmapImage bi3 = new BitmapImage();
-                    bi3.BeginInit();
-                    bi3.UriSource = new Uri(currentSaga.getImgLink(), UriKind.RelativeOrAbsolute);
-                    bi3.CacheOption = BitmapCacheOption.OnLoad;
-                    bi3.EndInit();
-
-                    CoverSaga.Source = bi3;
-                }
-                else
-                    CoverSaga.Source = null;
-
-                listBook.Items.Clear();
-
-                foreach (Chapters c in allBooks)
-                {
-                    if (c.getIndex() != -1)
+                    if (c.isChapter() == true)
                     {
-                        if (c.isChapter() == true)
-                        {
-                            if (c.getTitle() == null)
-                                listBook.Items.Add("Chapitre " + c.getNumber() + " ");
-                            else
-                                listBook.Items.Add("Chapitre " + c.getNumber() + " : " + c.getTitle());
-                        }
+                        if (c.getTitle() == null)
+                            listBook.Items.Add("Chapitre " + c.getNumber() + " ");
                         else
-                        {
-                            if (c.getTome().getTitle() != null)
-                                listBook.Items.Add("Tome " + c.getNumber() + " : " + c.getTome().getTitle());
-                            else
-                                listBook.Items.Add("Tome " + c.getNumber() + " ");
-                        }
+                            listBook.Items.Add("Chapitre " + c.getNumber() + " : " + c.getTitle());
+                    }
+                    else
+                    {
+                        if (c.getTome().getTitle() != null)
+                            listBook.Items.Add("Tome " + c.getNumber() + " : " + c.getTome().getTitle());
+                        else
+                            listBook.Items.Add("Tome " + c.getNumber() + " ");
                     }
                 }
+            }
 
         }
 
-        private void ListSaga_SelectionChanged(object sender, RoutedEventArgs e)
+        private void ListSaga_MouseDown(object sender, MouseButtonEventArgs e)
         {
             loadChapter();
         }
@@ -298,10 +304,29 @@ namespace ScanDownloaderV2
             Download dl = new Download(index, selectedSite, currentSaga.getName(), currentSaga.getImgLink(), newList);
             listDownload.Add(dl);
 
-            addDownloadListBox(dl);
+            saveDownload();
+
+            int id = listBoxDownload.Items.Count;
+            addDownloadListBox(dl, id);
         }
 
-        private void addDownloadListBox(Download dl)
+        private void loadDownload()
+        {
+
+            if (!File.Exists("/tmp/Json/Download.json"))
+                return;
+            string json = File.ReadAllText("/tmp/Json/Download.json");
+
+            listDownload = JsonConvert.DeserializeObject<List<Download>>(json);
+            int i = 0;
+            foreach (Download dl in listDownload)
+            {
+                addDownloadListBox(dl, i);
+                i++;
+            }
+        }
+
+        private void addDownloadListBox(Download dl, int index)
         {
             Grid g = new Grid();
             g.Height = 70;
@@ -310,7 +335,7 @@ namespace ScanDownloaderV2
             img.HorizontalAlignment = HorizontalAlignment.Left;
             img.Width = 70;
 
-            if (currentSaga.getImgLink() != null)
+            if (dl.cover_path != null)
             {
                 BitmapImage bi3 = new BitmapImage();
                 bi3.BeginInit();
@@ -339,20 +364,21 @@ namespace ScanDownloaderV2
             tb2.VerticalAlignment = VerticalAlignment.Top;
             g.Children.Add(tb2);
 
-            ProgressBar pb1 = new ProgressBar();
-            pb1.Margin = new Thickness(75, 0, 10, 20);
-            pb1.Height = 10;
-            pb1.VerticalAlignment = VerticalAlignment.Bottom;
+            if (index == 0)
+            {
+                pg1 = new ProgressBar();
+                pg1.Margin = new Thickness(75, 0, 10, 20);
+                pg1.Height = 10;
+                pg1.VerticalAlignment = VerticalAlignment.Bottom;
 
-            ProgressBar pb2 = new ProgressBar();
-            pb2.Margin = new Thickness(75, 0, 10, 0);
-            pb2.Height = 10;
-            pb2.VerticalAlignment = VerticalAlignment.Bottom;
+                pg2 = new ProgressBar();
+                pg2.Margin = new Thickness(75, 0, 10, 0);
+                pg2.Height = 10;
+                pg2.VerticalAlignment = VerticalAlignment.Bottom;
 
-            dl.setPg(pb1, pb2);
-
-            g.Children.Add(dl.pb1);
-            g.Children.Add(dl.pb2);
+                g.Children.Add(pg1);
+                g.Children.Add(pg2);
+            }
 
             Button bt1 = new Button();
             bt1.Content = "E";
@@ -381,7 +407,7 @@ namespace ScanDownloaderV2
 
         private void buttonEditDL_Click(object sender, RoutedEventArgs e)
         {
-
+            saveDownload();
         }
 
         private void buttonDeleteDL_Click(object sender, RoutedEventArgs e)
@@ -394,10 +420,14 @@ namespace ScanDownloaderV2
                     listDownload.RemoveAt(i);
             }
 
+            saveDownload();
+
             listBoxDownload.Items.Clear();
+            int id = 0;
             foreach (Download d in listDownload)
             {
-                addDownloadListBox(d);
+                addDownloadListBox(d, id);
+                id++;
             }
         }
 
@@ -426,7 +456,9 @@ namespace ScanDownloaderV2
             Download dl = new Download(index, selectedSite, currentSaga.getName(), currentSaga.getImgLink(), newList);
             listDownload.Add(dl);
 
-            addDownloadListBox(dl);
+            saveDownload();
+
+            addDownloadListBox(dl, listBoxDownload.Items.Count);
         }
 
         private void ButtonExplorer_Click(object sender, RoutedEventArgs e)
@@ -463,23 +495,26 @@ namespace ScanDownloaderV2
                     if (c.getTome() != null)
                     {
                         if (c.getTome().getTitle() != null && c.getTome().getTitle() != "")
+                        {
+                            c.getTome().title = c.getTome().title.Replace(":", "-");
+                            c.getTome().title = c.getTome().title.Replace("*", ".");
+                            c.getTome().title = c.getTome().title.Replace("?", "!");
+                            c.getTome().title = c.getTome().title.Replace("<", "-");
+                            c.getTome().title = c.getTome().title.Replace(">", "-");
+                            c.getTome().title = c.getTome().title.Replace("|", "-");
+
                             path2 = path2 + "Tome " + c.getTome().getNumber() + " - " + c.getTome().getTitle() + "\\";
+                        }
                         else
                             path2 = path2 + "Tome " + c.getTome().getNumber() + "\\";
+
                         System.IO.Directory.CreateDirectory(path2);
                     }
 
                     List<String> pages_link = null;
                     int error = 0;
 
-                    try {
                         pages_link = allSites[d.site - 1].prepareDownload(c);
-                    }
-                    catch (Exception g)
-                    {
-                        listBoxErrors.Items.Add("Error Préparation : " + d.name + " " + c.getNumber());
-                        error = 1;
-                    }
 
                     if (error == 0)
                     {
@@ -492,7 +527,7 @@ namespace ScanDownloaderV2
                             {
                                 nb_page_real++;
                                 allSites[d.site - 1].downloadScan(l, nb_page_real - 1, c, path2);
-                                d.pb1.Value = (int)((double)((double)(nb_page_real) / (double)(nb_page_max)) * 100.0);
+                                (pg1).Value = (int)((double)((double)(nb_page_real) / (double)(nb_page_max)) * 100.0);
                                 await Task.Delay(100);
                             }
                             catch (Exception g)
@@ -501,9 +536,12 @@ namespace ScanDownloaderV2
                             }
                         }
                         nb_chap_real++;
-                        d.pb2.Value = (int)((double)((double)(nb_chap_real) / (double)(d.chapters.Count())) * 100.0);
+                        (pg2).Value = (int)((double)((double)(nb_chap_real) / (double)(d.chapters.Count())) * 100.0);
                         await Task.Delay(10);
                     }
+
+                    d.total_to_dl_real++;
+                    saveDownload();
                 }
 
                 int pos = 0;
@@ -514,12 +552,67 @@ namespace ScanDownloaderV2
                     pos++;
                 }
 
+                saveDownload();
+
                 listBoxDownload.Items.Clear();
                 foreach (Download d2 in listDownload)
                 {
-                    addDownloadListBox(d2);
+                    addDownloadListBox(d2, listBoxDownload.Items.Count);
                 }
             }
+        }
+
+        private void buttonDownloadSelect_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                foreach (ListBoxItem o in listSagas.SelectedItems)
+                {
+                    foreach (KeyValuePair<String, String> m in printMangas)
+                    {
+                        if (o.Content.ToString() == m.Key)
+                        {
+                            ISaga newSaga = getCurrentSaga();
+
+                            currentSaga.load_chapters(m);
+                            List<Chapters> allBooks = currentSaga.get_chapters();
+
+                            if (allBooks.Count > 0 && allBooks[0].getIndex() == -1)
+                            {
+                                newSaga = null;
+                            }
+                            else
+                            {
+                                List<Chapters> allChaps = newSaga.get_chapters();
+                                List<Chapters> newList = new List<Chapters>();
+                                for (int i = allBooks.Count - 1; i >= 0; --i)
+                                    newList.Add(new Chapters(allBooks[i]));
+
+                                int index;
+                                if (listDownload.Count <= 0)
+                                    index = 0;
+                                else
+                                    index = listDownload.Last().index + 1;
+
+                                Download dl = new Download(index, selectedSite, currentSaga.getName(), currentSaga.getImgLink(), newList);
+                                listDownload.Add(dl);
+
+                                addDownloadListBox(dl, listBoxDownload.Items.Count);
+                            }
+                            break;
+                        }
+                    }
+                }
+                saveDownload();
+            }));
+        }
+
+        public void saveDownload()
+        {
+            String json = JsonConvert.SerializeObject(listDownload);
+            System.IO.Directory.CreateDirectory("/tmp/Json/");
+            File.WriteAllText("/tmp/Json/Download.json", json);
+            json = null;
         }
     }
 }

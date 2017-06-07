@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace ScanDownloaderV2
 {
+    [JsonObject(MemberSerialization.OptOut)]
     public class Chapters
     {
-        private bool is_chapter;
+        public bool is_chapter;
 
-        private int index;
-        private double number;
-        private String link;
-        private Tome tome;
-        private String title;
-        private int total_page;
+        public int index;
+        public double number;
+        public String link;
+        public Tome tome;
+        public String title;
+        public int total_page;
 
         public Chapters()
         {
-
+            index = 0;
+            number = 0;
+            link = "";
+            tome = new Tome();
+            title = "";
+            total_page = 0;
         }
 
         public Chapters(Chapters old)

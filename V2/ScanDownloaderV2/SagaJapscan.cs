@@ -85,7 +85,7 @@ namespace ScansDownloaderV2
                         list_chapter.Add(new Chapters(index, false, current_tome.getNumber(), "http://" + link + "/", current_tome, title));
                     else
                     {
-                        if (desc.IndexOf(":") != -1)
+                        if (desc.Substring(desc.IndexOf(name) + name.Length).IndexOf(":") != -1)
                         {
                             desc_det = desc.Substring(desc.IndexOf(name) + name.Length, desc.IndexOf(":") - (desc.IndexOf(name) + name.Length));
                             title = desc.Substring(desc.IndexOf(": ") + 2, desc.Length - (desc.IndexOf(": ") + 2));

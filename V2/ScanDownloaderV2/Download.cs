@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace ScanDownloaderV2
 {
-    class Download
+    [JsonObject(MemberSerialization.OptOut)]
+    public class Download
     {
         public int index;
         public int site;
@@ -19,8 +17,24 @@ namespace ScanDownloaderV2
         public int nb_chapter;
         public int nb_tome;
 
-        public ProgressBar pb1;
-        public ProgressBar pb2;
+        public int total_to_dl;
+        public int total_to_dl_real;
+
+        public Download()
+        {
+            index = -1;
+            site = -1;
+            name = "";
+            cover_path = "";
+
+            nb_chapter = 0;
+            nb_tome = 0;
+
+            chapters = new List<Chapters>();
+
+            total_to_dl = 0;
+            total_to_dl_real = 0;
+        }
 
         public Download(int id, int s, String n, String c, List<Chapters> lc)
         {
@@ -40,12 +54,9 @@ namespace ScanDownloaderV2
                 else
                     nb_tome++;
             }
-        }
 
-        public void setPg(ProgressBar pb1, ProgressBar pb2)
-        {
-            this.pb1 = pb1;
-            this.pb2 = pb2;
+            total_to_dl = nb_chapter + nb_tome;
+            total_to_dl_real = 0;
         }
     }
 }
