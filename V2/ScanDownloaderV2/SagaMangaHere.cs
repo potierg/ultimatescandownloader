@@ -56,7 +56,7 @@ namespace ScansDownloaderV2
             {
                 if (i.IndexOf("has been licensed") != -1)
                 {
-                    list_chapter.Add(new Chapters(-1, false, 0, "", null, "Manga has been licensed"));
+                    list_chapter.Add(new Chapters(-1, false, 0, "", null, "Manga has been licensed", null));
                 }
 
                 if (i.IndexOf("<div class=\"detail_list\">") != -1)
@@ -82,8 +82,6 @@ namespace ScansDownloaderV2
 
                 if (i.IndexOf("<span class=\"mr6\"") != -1 && is_start == 1)
                 {
-                    is_start = 0;
-
                     int tome_nb = 0;
                     if (i.IndexOf("Vol ") != -1)
                         tome_nb = Int32.Parse(HtmlRequest.cut_str(i, "Vol ", "</span>"));
@@ -91,8 +89,15 @@ namespace ScansDownloaderV2
                     if (current_tome == null || current_tome.getNumber() != tome_nb)
                         current_tome = new Tome(null, tome_nb);
 
-                    current_chapter.setIndex(index);
                     current_chapter.setTome(current_tome);
+                }
+
+                if (i.IndexOf("<span class=\"right\">") != -1 && is_start == 1)
+                {
+                    is_start = 0;
+
+                    current_chapter.setIndex(index);
+                    current_chapter.date = HtmlRequest.cut_str(i, "<span class=\"right\">", "</span>");
                     index++;
 
                     list_chapter.Add(current_chapter);

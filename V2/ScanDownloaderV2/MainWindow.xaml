@@ -60,11 +60,23 @@
                         <Button x:Name="ButtonStart" Content="Start" HorizontalAlignment="Right" Margin="0,0,102,0" VerticalAlignment="Top" Width="87" Height="28" Click="ButtonStart_Click"/>
                         <Button x:Name="Buttonstop" Content="Stop" Margin="0,0,10,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Right" Width="87" Click="Buttonstop_Click"/>
                     </Grid>
-                    <ListBox x:Name="listBoxDownload" Margin="0,38,0,248" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListBox x:Name="listBoxDownload" Margin="58,38,0,248.4" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible">
 
                     </ListBox>
                     <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,0,0,227" TextWrapping="Wrap" Text="Erreurs" Height="16" VerticalAlignment="Bottom"/>
                     <ListBox x:Name="listBoxErrors" Height="212" Margin="0,0,0,10" VerticalAlignment="Bottom"/>
+                    <Grid HorizontalAlignment="Left" Margin="6,38,0,248.4" Width="47" VerticalAlignment="Center">
+                        <Button x:Name="ButtonUpDownload" HorizontalAlignment="Left" Width="47" Height="47" Margin="0,-33,0,33.2" Style="{StaticResource MyButton}" Click="ButtonUpDownload_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Ressources/ArrowUp.png"/>
+                            </Button.Background>
+                        </Button>
+                        <Button x:Name="ButtonDownDownload" HorizontalAlignment="Left" Width="47" Height="47" Margin="0,19,0,-18.8" Style="{StaticResource MyButton}" Click="ButtonDownDownload_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Ressources/ArrowDown.png"/>
+                            </Button.Background>
+                        </Button>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

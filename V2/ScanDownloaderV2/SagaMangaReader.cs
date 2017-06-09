@@ -37,10 +37,14 @@ namespace ScansDownloaderV2
 
             list_chapter.Clear();
             int is_start = 0;
+            int is_line_start = 0;
 
-            String[] tab;
             int det = 0;
             int index = 0;
+
+            Double tmp_number = 0;
+            String tmp_link = "";
+            String tmp_title = "";
 
             foreach (String i in html)
             {
@@ -67,6 +71,12 @@ namespace ScansDownloaderV2
                 if (i.IndexOf("<th class=\"leftgap\">Chapter Name</th>") != -1)
                     is_start = 1;
 
+                if (i.IndexOf("<a href=\"") != -1 && is_start == 1)
+                    is_line_start = 1;
+
+                if (i.IndexOf("<div class=\"clear\"></div>") != -1 && is_start == 1)
+                    is_start = 0;
+
                 if (i.IndexOf("<div id=\"mangaimg\">") == 0)
                     img_link = HtmlRequest.cut_str(i, "<div id=\"mangaimg\"><img src=\"", "\" alt=");
 
@@ -75,14 +85,21 @@ namespace ScansDownloaderV2
                     String link = HtmlRequest.cut_str(i, "<a href=\"", "\">");
                     String desc = HtmlRequest.cut_str(i, "\">", "</a>") + " : " + HtmlRequest.cut_str(i, "</a> : ", "</td>");
 
-                    Double number = TryParseDouble(HtmlRequest.cut_str(i, "\">", "</a>").Substring(name.Length));
+                    tmp_number = TryParseDouble(HtmlRequest.cut_str(i, "\">", "</a>").Substring(name.Length));
 
-                    String title = null;
+                    tmp_title = null;
                     if (desc.IndexOf(" : ") != -1)
-                        title = HtmlRequest.cut_str(i, "</a> : ", "</td>");
+                        tmp_title = HtmlRequest.cut_str(i, "</a> : ", "</td>");
 
-                    list_chapter.Insert(0, new Chapters(index, true, number, "http://www.mangareader.net" + link + "/", null, title));
+                    tmp_link = "http://www.mangareader.net" + link + "/";
+                }
+
+                if (i.IndexOf("<td>") != -1 && is_line_start == 1)
+                {
+                    String date = HtmlRequest.cut_str(i, "<td>", "</td>");
+                    list_chapter.Insert(0, new Chapters(index, true, tmp_number, tmp_link, null, tmp_title, date));
                     index++;
+                    is_line_start = 0;
                 }
             }
             nb_tomes = 0;

@@ -14,6 +14,7 @@ namespace ScanDownloaderV2
         public Tome tome;
         public String title;
         public int total_page;
+        public String date;
 
         public Chapters()
         {
@@ -23,6 +24,7 @@ namespace ScanDownloaderV2
             tome = new Tome();
             title = "";
             total_page = 0;
+            date = null;
         }
 
         public Chapters(Chapters old)
@@ -37,9 +39,10 @@ namespace ScanDownloaderV2
                 this.tome = null;
             this.title = old.title;
             this.total_page = old.total_page;
+            this.date = old.date;
         }
 
-        public Chapters(int id, bool is_chapter, double nb, String l, Tome t, String title)
+        public Chapters(int id, bool is_chapter, double nb, String l, Tome t, String title, String date)
         {
             this.index = id;
             this.is_chapter = is_chapter;
@@ -48,6 +51,7 @@ namespace ScanDownloaderV2
             this.tome = t;
             this.title = title;
             this.total_page = 0;
+            this.date = date;
         }
 
         public void setIndex(int id)

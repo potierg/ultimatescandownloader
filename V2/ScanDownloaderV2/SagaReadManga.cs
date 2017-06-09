@@ -45,11 +45,14 @@ namespace ScansDownloaderV2
             String tmp_link = "";
 
             int index = 0;
+            int next_line = 0;
 
+            Double tmp_number = 0;
+
+            Chapters tmp_chapter = null;
 
             foreach (String i in html)
             {
-
                 if (synopsis == 1)
                 {
                     synopsis = 0;
@@ -87,17 +90,30 @@ namespace ScansDownloaderV2
                 if (i.IndexOf("<a href=\"") != -1 && chapter == 1)
                     tmp_link = HtmlRequest.cut_str(i, "<a href=\"", "\">");
 
+                if (next_line == 1)
+                {
+                    next_line = 0;
+                    if (tmp_number != -666)
+                    {
+                        tmp_chapter.date = HtmlRequest.cut_str(i, "\"> ", "</span>");
+                        list_chapter.Add(tmp_chapter);
+                    }
+                }
+
                 if (i.IndexOf("<span class=\"val\"><span class=\"icon-arrow-2\"></span>") != -1)
                 {
                     String desc = HtmlRequest.cut_str(i, "\"></span>", " </span>");
+                    if (desc == "NOT FOUND")
+                        desc = i.Substring(i.IndexOf("\"></span>") + 9);
 
-                    Double number = TryParseDouble(desc.Substring(name.Length + 3));
+                    tmp_number = TryParseDouble(desc.Substring(name.Length + 3));
 
-                    if (number != -666)
+                    if (tmp_number != -666)
                     {
-                        list_chapter.Add(new Chapters(index, true, number, tmp_link + "/", null, null));
+                        tmp_chapter = new Chapters(index, true, tmp_number, tmp_link + "/", null, null, null);
                         index++;
                     }
+                    next_line = 1;
                 }
             }
             nb_tomes = 0;

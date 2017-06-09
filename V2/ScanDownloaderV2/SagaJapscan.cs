@@ -82,7 +82,7 @@ namespace ScansDownloaderV2
                     String title = null;
 
                     if (current_tome != null && i.IndexOf("Tome " + current_tome.getNumber()) != -1)
-                        list_chapter.Add(new Chapters(index, false, current_tome.getNumber(), "http://" + link + "/", current_tome, title));
+                        list_chapter.Add(new Chapters(index, false, current_tome.getNumber(), "http://" + link + "/", current_tome, title, null));
                     else
                     {
                         if (desc.Substring(desc.IndexOf(name) + name.Length).IndexOf(":") != -1)
@@ -95,7 +95,7 @@ namespace ScansDownloaderV2
 
                         Double number = TryParseDouble(desc_det);
 
-                        list_chapter.Add(new Chapters(index, true, number, "http://" + link + "/", current_tome, title));
+                        list_chapter.Add(new Chapters(index, true, number, "http://" + link + "/", current_tome, title, null));
 
                         index++;
                     }

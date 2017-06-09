@@ -63,6 +63,9 @@
     </ApplicationDefinition>
     <Compile Include="Chapters.cs" />
     <Compile Include="Download.cs" />
+    <Compile Include="EditDownload.xaml.cs">
+      <DependentUpon>EditDownload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HtmlRequest.cs" />
     <Compile Include="ISaga.cs" />
     <Compile Include="MyPage.cs" />
@@ -75,6 +78,10 @@
     <Compile Include="SiteMangaReader.cs" />
     <Compile Include="SiteReadManga.cs" />
     <Compile Include="Tome.cs" />
+    <Page Include="EditDownload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,6 +123,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\ArrowDown.png" />
+    <Resource Include="Ressources\ArrowUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\Delete.png" />
+    <Resource Include="Ressources\Edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

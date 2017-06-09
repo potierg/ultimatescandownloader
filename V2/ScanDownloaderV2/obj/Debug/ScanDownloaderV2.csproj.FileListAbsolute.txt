@@ -14,3 +14,9 @@ c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\S
 c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Debug\ScanDownloaderV2.pdb
 C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Debug\Newtonsoft.Json.dll
 C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Debug\App.baml
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Debug\EditDownload.g.cs
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Debug\EditDownload.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Debug\ScanDownloaderV2.exe.config
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Debug\ScanDownloaderV2.exe
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Debug\ScanDownloaderV2.pdb

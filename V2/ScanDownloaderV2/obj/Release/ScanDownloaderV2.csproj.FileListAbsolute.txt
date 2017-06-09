@@ -14,3 +14,25 @@ c:\users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\S
 C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csprojResolveAssemblyReference.cache
 C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.dll
 C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.xml
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\EditDownload.g.cs
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\App.baml
+C:\Users\guill\onedrive\documents\visual studio 2015\Projects\ScanDownloaderV2\ScanDownloaderV2\obj\Release\EditDownload.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.exe.config
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.exe
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.pdb
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.exe
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.pdb
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.dll
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.xml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csprojResolveAssemblyReference.cache
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\EditDownload.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\MainWindow.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\App.g.cs
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2_MarkupCompile.cache
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2_MarkupCompile.lref
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\App.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\EditDownload.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\MainWindow.baml
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.g.resources
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.Properties.Resources.resources
+C:\Users\guill\OneDrive\Documents\UltimateScanDownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csproj.GenerateResource.Cache

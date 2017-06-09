@@ -154,20 +154,25 @@ namespace ScanDownloaderV2
                     {
                         if (c.getIndex() != -1)
                         {
+                            String tmp_content = "";
                             if (c.isChapter() == true)
                             {
                                 if (c.getTitle() == null)
-                                    listBook.Items.Add("Chapitre " + c.getNumber() + " ");
+                                    tmp_content = "Chapitre " + c.getNumber() + " ";
                                 else
-                                    listBook.Items.Add("Chapitre " + c.getNumber() + " : " + c.getTitle());
+                                    tmp_content = "Chapitre " + c.getNumber() + " : " + c.getTitle();
                             }
                             else
                             {
                                 if (c.getTome().getTitle() != null)
-                                    listBook.Items.Add("Tome " + c.getNumber() + " : " + c.getTome().getTitle());
+                                    tmp_content = "Tome " + c.getNumber() + " : " + c.getTome().getTitle();
                                 else
-                                    listBook.Items.Add("Tome " + c.getNumber() + " ");
+                                    tmp_content = "Tome " + c.getNumber() + " ";
                             }
+                            if (c.date == null)
+                                listBook.Items.Add(tmp_content);
+                            else
+                                listBook.Items.Add(c.date + " - " + tmp_content);
                         }
                     }
 
@@ -176,12 +181,19 @@ namespace ScanDownloaderV2
                 }
                 if (isDownloadRefresh)
                 {
+                    int selectId = listBoxDownload.SelectedIndex;
                     int id = 0;
                     listBoxDownload.Items.Clear();
                     foreach (Download dl in listDownload)
                     {
                         addDownloadListBox(dl, id);
                         id++;
+                    }
+                    if (selectId >= 0 && listBoxDownload.Items.Count > 0 && selectId < listBoxDownload.Items.Count)
+                    {
+                        listBoxDownload.SelectedItem = listBoxDownload.Items.GetItemAt(selectId);
+
+                        listBoxDownload.ScrollIntoView(listBoxDownload.SelectedItem);
                     }
                     isDownloadRefresh = false;
                 }
@@ -465,23 +477,27 @@ namespace ScanDownloaderV2
             }
 
             Button bt1 = new Button();
-            bt1.Content = "E";
             bt1.HorizontalAlignment = HorizontalAlignment.Right;
             bt1.Margin = new Thickness(0, 1, 38, 0);
             bt1.VerticalAlignment = VerticalAlignment.Top;
             bt1.Width = 23;
+            bt1.Height = 23;
             bt1.Tag = dl.index;
+            bt1.Style = FindResource("MyButton") as Style;
+            bt1.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Ressources/Edit.png", UriKind.RelativeOrAbsolute)) };
             bt1.Click += buttonEditDL_Click;
 
             g.Children.Add(bt1);
 
             Button bt2 = new Button();
-            bt2.Content = "X";
             bt2.HorizontalAlignment = HorizontalAlignment.Right;
             bt2.Margin = new Thickness(0, 1, 10, 0);
             bt2.VerticalAlignment = VerticalAlignment.Top;
             bt2.Width = 23;
+            bt2.Height = 23;
             bt2.Tag = dl.index;
+            bt2.Style = FindResource("MyButton") as Style;
+            bt2.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Ressources/Delete.png", UriKind.RelativeOrAbsolute)) };
             bt2.Click += buttonDeleteDL_Click;
 
             g.Children.Add(bt2);
@@ -491,9 +507,22 @@ namespace ScanDownloaderV2
 
         private void buttonEditDL_Click(object sender, RoutedEventArgs e)
         {
-            saveDownload();
-            isDownloadRefresh = true;
+            int tmp_index = (int)((Button)sender).Tag;
+
+            EditDownload new_win = new EditDownload(this);
+            foreach (Download dl in listDownload)
+            {
+                if (dl.index == tmp_index)
+                {
+                    new_win.setDownload(dl);
+                    break;
+                }
+
+            }
+
+            new_win.Show();
         }
+
 
         private void buttonDeleteDL_Click(object sender, RoutedEventArgs e)
         {
@@ -719,6 +748,42 @@ namespace ScanDownloaderV2
         private void Buttonstop_Click(object sender, RoutedEventArgs e)
         {
             isStart = false;
+        }
+
+        private void ButtonUpDownload_Click(object sender, RoutedEventArgs e)
+        {
+            int selectid = listBoxDownload.SelectedIndex;
+            if (selectid <= 0)
+                return;
+
+            Download tmp = listDownload[selectid - 1];
+            listDownload[selectid - 1] = listDownload[selectid];
+            listDownload[selectid] = tmp;
+
+            listDownload[selectid - 1].index = selectid - 1;
+            listDownload[selectid].index = selectid;
+
+            saveDownload();
+            listBoxDownload.SelectedItem = listBoxDownload.Items.GetItemAt(selectid - 1);
+            isDownloadRefresh = true;
+        }
+
+        private void ButtonDownDownload_Click(object sender, RoutedEventArgs e)
+        {
+            int selectid = listBoxDownload.SelectedIndex;
+            if (selectid >= listDownload.Count - 1)
+                return;
+
+            Download tmp = listDownload[selectid + 1];
+            listDownload[selectid + 1] = listDownload[selectid];
+            listDownload[selectid] = tmp;
+
+            listDownload[selectid + 1].index = selectid + 1;
+            listDownload[selectid].index = selectid;
+
+            saveDownload();
+            listBoxDownload.SelectedItem = listBoxDownload.Items.GetItemAt(selectid + 1);
+            isDownloadRefresh = true;
         }
     }
 }
