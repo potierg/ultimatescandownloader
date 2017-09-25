@@ -85,7 +85,7 @@ namespace ScansDownloaderV2
             {
                 if (j.IndexOf("class=\"img-responsive-2\"") != -1)
                 {
-                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "\" class="), chapitre.getNumber(), chapitre.isChapter());
+                    MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "?u=\" class="), chapitre.getNumber(), chapitre.isChapter());
                     p.download(path);
                     p = null;
                 }
