@@ -76,7 +76,7 @@ namespace ScanDownloaderV2
                     numberBuilder.Append(c);
             }
             String new_nb = numberBuilder.ToString();
-            new_nb = new_nb.Replace(".", ",");
+            new_nb = new_nb.Replace(",", ".");
             try
             {
                 Double ret = Convert.ToDouble(new_nb);
