@@ -83,7 +83,7 @@ namespace ScansDownloaderV2
             string[] content2 = HtmlRequest.get_html(link);
             foreach (String j in content2)
             {
-                if (j.IndexOf("class=\"img-responsive-2\"") != -1)
+                if (j.IndexOf("class=\"img-responsive\"") != -1)
                 {
                     MyPage p = new MyPage(nb_page, chapitre.getMax(), HtmlRequest.cut_str(j, "src=\"", "?u=\" class="), chapitre.getNumber(), chapitre.isChapter());
                     p.download(path);

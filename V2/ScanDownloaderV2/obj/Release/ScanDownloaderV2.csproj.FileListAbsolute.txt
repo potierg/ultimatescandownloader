@@ -41,7 +41,6 @@ D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\bin\Release\ScanDownloaderV2
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\bin\Release\ScanDownloaderV2.pdb
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.dll
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\bin\Release\Newtonsoft.Json.xml
-D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csprojResolveAssemblyReference.cache
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\EditDownload.g.cs
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\MainWindow.g.cs
 D:\rendu\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\App.g.cs
