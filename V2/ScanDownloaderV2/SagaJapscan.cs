@@ -47,8 +47,9 @@ namespace ScansDownloaderV2
             Tome current_tome = null;
             int index = 0;
 
-            foreach (String i in html)
+            foreach (String i2 in html)
             {
+                String i = i2.Replace("\t", "");
                 found = i.IndexOf("<a href=\"//www.japscan.com/lecture-en-ligne/");
                 found2 = i.IndexOf("<h2>Volume");
                 found3 = i.IndexOf("<div class=\"cell\">");
@@ -102,7 +103,8 @@ namespace ScansDownloaderV2
                 }
                 else if (found2 == 0)
                 {
-                    String data = i.Substring(4, i.Length - 14);
+                    String data = i.Substring(i.IndexOf("<h2>") + 4);
+                    data = data.Substring(0, data.IndexOf("</h2>"));
 
                     String nb_tome = Regex.Match(data, @"\d+").Value;
 
