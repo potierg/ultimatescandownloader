@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -48,11 +49,20 @@ namespace ScansDownloaderV2
             return html_res.Split('\n');
         }
 
-        static public void save_image(String link, String path)
+        static public void save_image(String link, String path, int nb_try = 0)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                client.DownloadFile(new Uri(link), @path);
+                Debug.WriteLine(link);
+                using (WebClient client = new WebClient())
+                {
+                    client.DownloadFile(new Uri(link), @path);
+                }
+            } catch (WebException we)
+            {
+                Debug.WriteLine("Fail " + link);
+                if (nb_try < 3)
+                    HtmlRequest.save_image(link, path, nb_try + 1);
             }
         }
 

@@ -646,15 +646,24 @@ namespace ScanDownloaderV2
 
                             foreach (String l in pages_link)
                             {
-                                try
+                                int nb_try = 0;
+
+                                while (nb_try < 3)
                                 {
-                                    nb_page_real++;
-                                    allSites[d.site - 1].downloadScan(l, nb_page_real - 1, c, path2);
-                                    pg1Val = (int)((double)((double)(nb_page_real) / (double)(nb_page_max)) * 100.0);
-                                }
-                                catch (Exception g)
-                                {
-                                    listBoxErrors.Items.Add("Error : " + d.name + " " + c.getNumber() + " page " + nb_page_real);
+                                    try
+                                    {
+                                        if (nb_try == 0)
+                                            nb_page_real++;
+                                        allSites[d.site - 1].downloadScan(l, nb_page_real - 1, c, path2);
+                                        pg1Val = (int)((double)((double)(nb_page_real) / (double)(nb_page_max)) * 100.0);
+                                        nb_try = 3;
+                                    }
+                                    catch (Exception g)
+                                    {
+                                        Debug.WriteLine("Error : " + d.name + " " + c.getNumber() + " page " + nb_page_real);
+                                        //listBoxErrors.Items.Add("Error : " + d.name + " " + c.getNumber() + " page " + nb_page_real);
+                                        nb_try++;
+                                    }
                                 }
                             }
                         }
