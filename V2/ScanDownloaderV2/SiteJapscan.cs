@@ -55,7 +55,7 @@ namespace ScansDownloaderV2
             foreach (String i2 in content)
             {
                 String i = i2.Replace("\t", "");
-                if (i.IndexOf("data-img") != -1 && i.IndexOf("itemprop") == -1 && i.IndexOf("__Add__") == -1)
+                if (i.IndexOf("data-img") != -1 && i.IndexOf("data-img=\"IMG__") == -1 && i.IndexOf("__Add__") == -1)
                 {
                     listlinkPage.Add("http://www.japscan.com" + HtmlRequest.cut_str(i, "value=\"", "\">"));
                     nb_page++;

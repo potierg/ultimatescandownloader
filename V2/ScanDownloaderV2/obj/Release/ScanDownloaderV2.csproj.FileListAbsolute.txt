@@ -73,3 +73,4 @@ C:\Users\gpotier\Documents\ultimatescandownloader\V2\ScanDownloaderV2\obj\Releas
 C:\Users\gpotier\Documents\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.g.resources
 C:\Users\gpotier\Documents\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.Properties.Resources.resources
 C:\Users\gpotier\Documents\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csproj.GenerateResource.Cache
+C:\Users\gpotier\Documents\ultimatescandownloader\V2\ScanDownloaderV2\obj\Release\ScanDownloaderV2.csprojResolveAssemblyReference.cache
